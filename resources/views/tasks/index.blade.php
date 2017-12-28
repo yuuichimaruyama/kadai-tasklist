@@ -3,9 +3,11 @@
 @section('content')
 
 <!-- ここにページ毎のコンテンツを書く -->
-<h1>タスクリスト</h1>
-
-   @if (count($tasks) > 0)
+<!--<h1>タスクリスト</h1>-->
+@if (Auth::check())
+        <?php $user = Auth::user(); ?>
+       <!--{{ $user->name }} -->
+         @if (count($tasks) > 0)
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -24,6 +26,15 @@
                 @endforeach
             </tbody>
         </table>
+        @endif
+        {!! link_to_route('tasks.create', '新規タスクの作成', null, ['class' => 'btn btn-primary']) !!}
+    @else
+        <div class="center jumbotron">
+            <div class="text-center">
+                <h1>Welcome to the TaskList</h1>
+                {!! link_to_route('signup.get', 'Sign up now!', null, ['class' => 'btn btn-lg btn-primary']) !!}
+            </div>
+        </div>
     @endif
-{!! link_to_route('tasks.create', '新規タスクの作成', null, ['class' => 'btn btn-primary']) !!}
+
 @endsection
